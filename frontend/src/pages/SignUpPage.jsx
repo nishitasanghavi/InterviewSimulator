@@ -172,10 +172,18 @@ export default function SignupPage() {
               </motion.div>
             ))}
 
-            <motion.button type="submit" className="w-full py-4 bg-indigo-600 text-white rounded-lg">
+            <motion.button type="submit" className="w-full py-4 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-lg">
               Sign Up
             </motion.button>
           </form>
+          <div className="text-center mt-6">
+                      <p className="text-sm text-gray-600">
+                        Already have an account?{" "}
+                        <Link to="/login" className="text-indigo-500 font-medium">
+                          Login
+                        </Link>
+                      </p>
+                    </div>
         </motion.div>
       </motion.div>
     </motion.div>
