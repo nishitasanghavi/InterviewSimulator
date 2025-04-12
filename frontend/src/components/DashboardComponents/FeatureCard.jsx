@@ -1,16 +1,38 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { Button } from "../../components/ui/button";
 
-const FeatureCard = ({ icon, title, description }) => {
+export const FeatureCard = ({
+  title,
+  description,
+  icon: Icon,
+  buttonText,
+  buttonColor = "indigo",
+}) => {
   return (
-    <motion.div whileHover={{ scale: 1.05 }} className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg transition-transform hover:shadow-2xl">
-      <div className="bg-gradient-to-br from-indigo-500 to-purple-500 w-16 h-16 rounded-lg flex items-center justify-center mb-4 shadow-md">
-        {icon}
+    <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white p-6 rounded-xl shadow-sm">
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <p className="text-indigo-100 text-sm mt-1">{description}</p>
+        </div>
+        <div className="p-3 bg-white/20 rounded-lg">
+          {Icon && <Icon className="w-5 h-5 text-white" />}
+        </div>
       </div>
-      <h3 className="text-2xl font-semibold mb-3 text-gray-900">{title}</h3>
-      <p className="text-gray-600 leading-relaxed">{description}</p>
-    </motion.div>
+      <div className="mt-6">
+        <Button
+          className={`bg-white w-full ${
+            buttonColor === "indigo"
+              ? "text-indigo-600 hover:bg-indigo-50"
+              : buttonColor === "blue"
+              ? "text-blue-600 hover:bg-blue-50"
+              : buttonColor === "red"
+              ? "text-red-600 hover:bg-red-50"
+              : ""
+          }`}
+        >
+          {buttonText}
+        </Button>
+      </div>
+    </div>
   );
 };
-
-export default FeatureCard;

@@ -1,11 +1,11 @@
 import React from 'react';
-import Navbar from '../components/DashboardComponents/Navbar.jsx';
-import HeroSection from '../components/DashboardComponents/HeroSection.jsx';
-import FeaturesSection from '../components/DashboardComponents/FeaturesSection.jsx';
-import TestimonialSection from '../components/DashboardComponents/TestimonialsSection.jsx';
-import HowItWorks from '../components/DashboardComponents/HowItWorks.jsx';
-import FAQPage from '../components/DashboardComponents/FAQs.jsx';
-import Footer from '../components/DashboardComponents/Footer.jsx';
+import Navbar from '../components/LandPageComponents/Navbar.jsx';
+import HeroSection from '../components/LandPageComponents/HeroSection.jsx';
+import FeaturesSection from '../components/LandPageComponents/FeaturesSection.jsx';
+import TestimonialSection from '../components/LandPageComponents/TestimonialsSection.jsx';
+import HowItWorks from '../components/LandPageComponents/HowItWorks.jsx';
+import FAQPage from '../components/LandPageComponents/FAQs.jsx';
+import Footer from '../components/LandPageComponents/Footer.jsx';
 
 const LandingPage = () => {
   return (

@@ -5,6 +5,7 @@ import SignupPage from './pages/SignUpPage';
 import LoginPage from './pages/LogInPage';
 import CandidateDashboard from './pages/PofilePage';
 import Dashboard from './pages/Dashboard';
+import ResumeAnalytics from './pages/Resume';
 function App() {
   return (
     <Router>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<CandidateDashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/resume" element={<ResumeAnalytics />} />
       </Routes>
     </Router>
   );
