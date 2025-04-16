@@ -389,14 +389,6 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
               title="Resume Preview"
               className="rounded-xl border border-gray-200 w-full h-full"
             />
-
-            {/* <button
-                  className="flex items-center gap-2 bg-[#8A2BE2] text-white rounded-lg px-4 py-2 text-sm font-medium"
-                  onClick={() => window.open(resumeFile, "_blank")}
-                >
-                  Open Full Preview
-                </button> */}
-            {/* </div> */}
           </div>
         </div>
       </div>

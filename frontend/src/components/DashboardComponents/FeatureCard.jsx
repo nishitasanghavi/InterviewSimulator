@@ -6,6 +6,7 @@ export const FeatureCard = ({
   icon: Icon,
   buttonText,
   buttonColor = "indigo",
+  onClick
 }) => {
   return (
     <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white p-6 rounded-xl shadow-sm">
@@ -20,6 +21,7 @@ export const FeatureCard = ({
       </div>
       <div className="mt-6">
         <Button
+          onClick={onClick}
           className={`bg-white w-full ${
             buttonColor === "indigo"
               ? "text-indigo-600 hover:bg-indigo-50"
@@ -27,6 +29,8 @@ export const FeatureCard = ({
               ? "text-blue-600 hover:bg-blue-50"
               : buttonColor === "red"
               ? "text-red-600 hover:bg-red-50"
+              : buttonColor === "green"
+              ? "text-green-600 hover:bg-green-50"
               : ""
           }`}
         >

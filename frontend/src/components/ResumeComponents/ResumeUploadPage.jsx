@@ -25,70 +25,76 @@ import {
     X,
   } from "lucide-react";
 
-export default function ResumeUploadPage({ handleFileUpload, uploading, analyzing }) {
+  export default function ResumeUploadPage({ handleFileUpload, uploading, analyzing }) {
     return (
       <div className="flex flex-col h-screen bg-gray-50 font-sans">
         {/* Header */}
-        <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
+        <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-md">
           <Navbar />
         </div>
-        
+  
         {/* Navigation Tabs */}
-        <div className="bg-white shadow">
+        <div className="bg-white shadow-sm border-b border-gray-200">
           <Tabs />
         </div>
-        
+  
         {/* Main Content */}
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg">
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-[#8A2BE2]" />
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md transition-all duration-300">
+            <div className="text-center mb-5">
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
+                <FileText className="w-6 h-6 text-[#8A2BE2]" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-800 mb-2">Upload Your Resume</h1>
-              <p className="text-gray-600">
-                Upload your resume to get detailed insights and analytics to improve your job prospects
+              <h1 className="text-xl font-bold text-gray-800 mb-1">Upload Your Resume</h1>
+              <p className="text-gray-500 text-xs">
+                Get AI-driven insights to enhance your chances.
               </p>
             </div>
-            
+  
             {analyzing ? (
-              <div className="text-center py-12">
-                <div className="flex flex-col items-center justify-center gap-4">
-                  <div className="relative w-20 h-20">
-                    <div className="absolute top-0 left-0 w-full h-full border-4 border-[#8A2BE2] border-t-transparent rounded-full animate-spin"></div>
+              <div className="text-center py-6 animate-fadeIn">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="relative w-14 h-14">
+                    <div className="absolute inset-0 border-4 border-[#8A2BE2] border-t-transparent rounded-full animate-spin"></div>
                   </div>
-                  <div className="text-gray-800 font-medium">
-                    <h3 className="text-xl mb-2">Analyzing Your Resume</h3>
-                    <p className="text-gray-600">Please wait while we scan and evaluate your resume</p>
+                  <div className="text-gray-800 font-semibold text-sm">
+                    Analyzing Resume...
+                    <p className="text-gray-500 text-xs mt-1">Sit tight, this won't take long!</p>
                   </div>
                 </div>
-                
-                <div className="mt-8">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600">✓</div>
-                      <span className="text-gray-700">Checking formatting</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600">✓</div>
-                      <span className="text-gray-700">Scanning for keywords</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-[#8A2BE2]">
-                        <div className="w-3 h-3 bg-[#8A2BE2] rounded-full animate-pulse"></div>
+  
+                <div className="mt-6 space-y-3 text-left text-sm">
+                  {[
+                    ["Checking formatting", true],
+                    ["Scanning for keywords", true],
+                    ["Analyzing work experience", "loading"],
+                    ["Evaluating skill match", false]
+                  ].map(([label, status], index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                        status === true ? "bg-green-100 text-green-600" :
+                        status === "loading" ? "bg-purple-100 text-[#8A2BE2]" :
+                        "bg-gray-100 text-gray-400"
+                      }`}>
+                        {status === true && "✓"}
+                        {status === "loading" && <div className="w-2.5 h-2.5 bg-[#8A2BE2] rounded-full animate-pulse"></div>}
+                        {status === false && "⋯"}
                       </div>
-                      <span className="text-gray-700">Analyzing work experience</span>
+                      <span className={`${
+                        status === false ? "text-gray-500" : "text-gray-700"
+                      }`}>
+                        {label}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center text-gray-400">⋯</div>
-                      <span className="text-gray-500">Evaluating skill match</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             ) : (
               <>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6 text-center hover:border-[#8A2BE2] transition cursor-pointer">
+                <label
+                  htmlFor="resume-upload"
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#8A2BE2] transition cursor-pointer mb-4 block"
+                >
                   <input
                     type="file"
                     id="resume-upload"
@@ -97,64 +103,54 @@ export default function ResumeUploadPage({ handleFileUpload, uploading, analyzin
                     onChange={handleFileUpload}
                     disabled={uploading}
                   />
-                  <label htmlFor="resume-upload" className="cursor-pointer">
-                    {uploading ? (
-                      <div className="flex flex-col items-center justify-center gap-4">
-                        <div className="relative w-12 h-12">
-                          <div className="absolute top-0 left-0 w-full h-full border-4 border-[#8A2BE2] border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                        <span className="text-gray-700 font-medium">Uploading resume...</span>
+                  {uploading ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="relative w-10 h-10">
+                        <div className="absolute inset-0 border-4 border-[#8A2BE2] border-t-transparent rounded-full animate-spin"></div>
                       </div>
-                    ) : (
-                      <>
-                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-4">
-                          <Upload className="w-6 h-6 text-[#8A2BE2]" />
-                        </div>
-                        <p className="text-gray-700 font-medium mb-2">
-                          Drag and drop your resume here
-                        </p>
-                        <p className="text-gray-500 text-sm">
-                          Supports PDF, DOC, or DOCX up to 5MB
-                        </p>
-                      </>
-                    )}
-                  </label>
-                </div>
-                
-                <div className="flex items-center justify-center text-gray-500 mb-6">
+                      <span className="text-gray-700 text-sm font-semibold">Uploading...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2 shadow-inner">
+                        <Upload className="w-5 h-5 text-[#8A2BE2]" />
+                      </div>
+                      <p className="text-gray-700 text-sm font-medium">Drag & Drop Here</p>
+                      <p className="text-gray-400 text-xs mt-1">PDF, DOC, DOCX — Max 5MB</p>
+                    </>
+                  )}
+                </label>
+  
+                <div className="flex items-center justify-center text-gray-400 mb-4 text-xs">
                   <div className="w-full h-px bg-gray-200"></div>
-                  <span className="px-4 text-sm bg-white">or</span>
+                  <span className="px-2 bg-white">or</span>
                   <div className="w-full h-px bg-gray-200"></div>
                 </div>
-                
-                <div>
-                  <button
-                    className="w-full py-3 px-6 bg-gradient-to-r from-[#8A2BE2] to-[#6A5ACD] text-white rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition shadow-md font-medium disabled:opacity-50"
-                    onClick={() => document.getElementById('resume-upload').click()}
-                    disabled={uploading}
-                  >
-                    {uploading ? (
-                      <>Processing...</>
-                    ) : (
-                      <>
-                        <FileText className="w-5 h-5" />
-                        Browse Files
-                      </>
-                    )}
-                  </button>
-                </div>
+  
+                <button
+                  className="w-full py-2.5 bg-gradient-to-r from-[#8A2BE2] to-[#6A5ACD] text-white rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition shadow font-semibold text-sm disabled:opacity-50"
+                  onClick={() => document.getElementById('resume-upload').click()}
+                  disabled={uploading}
+                >
+                  {uploading ? "Processing..." : (
+                    <>
+                      <FileText className="w-4 h-4" />
+                      Browse Files
+                    </>
+                  )}
+                </button>
               </>
             )}
-            
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-purple-100 text-[#8A2BE2] flex-shrink-0">
-                  <Sparkles className="w-5 h-5" />
+  
+            <div className="mt-5 pt-4 border-t border-gray-200 text-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-[#8A2BE2] shadow-inner">
+                  <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-gray-800 font-medium mb-1">AI-Powered Analysis</h3>
-                  <p className="text-gray-600 text-sm">
-                    Our AI analyzes your resume against industry standards and provides tailored recommendations to help your application stand out.
+                  <h3 className="text-gray-800 font-semibold mb-1">AI-Powered Analysis</h3>
+                  <p className="text-gray-500 text-xs">
+                    Get smart recommendations to fine-tune your resume for real-world recruiter expectations.
                   </p>
                 </div>
               </div>
@@ -164,3 +160,5 @@ export default function ResumeUploadPage({ handleFileUpload, uploading, analyzin
       </div>
     );
   }
+  
+  
