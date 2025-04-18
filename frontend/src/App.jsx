@@ -6,6 +6,7 @@ import LoginPage from './pages/LogInPage';
 import CandidateDashboard from './pages/PofilePage';
 import Dashboard from './pages/Dashboard';
 import ResumeAnalytics from './pages/Resume';
+
 function App() {
   return (
     <Router>

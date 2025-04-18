@@ -27,7 +27,6 @@ import { UpcomingInterviews } from "../components/DashboardComponents/UpcomingIn
 import { RecentPerformance } from "../components/DashboardComponents/RecentPerfomance";
 import { PracticeResources } from "../components/DashboardComponents/PracticeResources";
 export default function InterviewSimulatorDashboard() {
-
   // Sample data
   const skills = [
     { name: "Data Structures", level: 85 },
@@ -76,12 +75,12 @@ export default function InterviewSimulatorDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
+      <div className="sticky top-0 z-50 bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
         <Navbar />
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-white shadow">
+      <div className="sticky top-10 z-50 bg-white shadow">
         <Tabs />
       </div>
 
@@ -106,21 +105,21 @@ export default function InterviewSimulatorDashboard() {
 
         {/* Main Content */}
         <div className="lg:w-3/4 space-y-6">
-      {/* Feature Cards */}
-      <FeatureCards />
-      
-      {/* Stats and Progress */}
-      <InterviewPerformance />
-      
-      {/* Upcoming and Recent Activity */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <UpcomingInterviews interviews={upcomingInterviews} />
-        <RecentPerformance performanceItems={recentPerformance} />
-      </div>
-      
-      {/* Featured Resources */}
-      <PracticeResources />
-    </div>
+          {/* Feature Cards */}
+          <FeatureCards />
+
+          {/* Stats and Progress */}
+          <InterviewPerformance />
+
+          {/* Upcoming and Recent Activity */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <UpcomingInterviews interviews={upcomingInterviews} />
+            <RecentPerformance performanceItems={recentPerformance} />
+          </div>
+
+          {/* Featured Resources */}
+          <PracticeResources />
+        </div>
       </div>
     </div>
   );
