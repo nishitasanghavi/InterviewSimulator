@@ -7,10 +7,22 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export default function ResumeUploadPage({ handleFileUpload, uploading, analyzing, onAnalyzeClick }) {
-  const [jobDescription, setJobDescription] = useState("");
+export default function ResumeUploadPage({ 
+  handleFileUpload, 
+  uploading, 
+  analyzing, 
+  onAnalyzeClick,
+  jobDescription,
+  setJobDescription 
+}) {
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const [resumeFile, setResumeFile] = useState(null);  // Added state to track uploaded file
+  const [resumeFile, setResumeFile] = useState(null);  // Track uploaded file
+
+  // Handle analyze button click
+  const handleAnalyzeButtonClick = () => {
+    setShowAnalysis(true);
+    onAnalyzeClick();
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gray-50 font-sans overflow-hidden">
@@ -89,7 +101,7 @@ export default function ResumeUploadPage({ handleFileUpload, uploading, analyzin
               {/* Analyse Button */}
               <button
                 className="w-full py-2.5 bg-gradient-to-r from-[#8A2BE2] to-[#6A5ACD] text-white rounded-lg hover:opacity-90 transition shadow font-semibold text-sm disabled:opacity-50"
-                onClick={() => setShowAnalysis(true)}
+                onClick={handleAnalyzeButtonClick}
                 disabled={uploading || !resumeFile}  // Disabled unless resume is uploaded
               >
                 Analyse Resume

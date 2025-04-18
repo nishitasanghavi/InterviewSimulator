@@ -1,9 +1,11 @@
 # app.py
 from flask import Flask, request, jsonify, render_template
 import os
-
+from flask_cors import CORS
 from Ats_scorer.scorer import get_gemini_score_and_feedback, get_generalized_score_and_feedback, extract_text_from_pdf
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -40,7 +42,7 @@ def score_resume():
         score, feedback = get_gemini_score_and_feedback(job_description, resume_text)
     else:
         score, feedback = get_generalized_score_and_feedback(resume_text)
-
+    print(f"Score: {score}, Feedback: {feedback}")
     return jsonify({
         'score': score,
         'feedback': feedback

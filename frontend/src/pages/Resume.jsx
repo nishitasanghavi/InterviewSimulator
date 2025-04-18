@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   ArrowLeft,
   ArrowRight,
@@ -30,6 +31,8 @@ export default function ResumeAnalyticsFlow() {
   const [uploadedResume, setUploadedResume] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [jobDescription, setJobDescription] = useState("");
 
   // Handle file upload
   const handleFileUpload = (e) => {
@@ -41,34 +44,62 @@ export default function ResumeAnalyticsFlow() {
       setTimeout(() => {
         setUploadedResume(file);
         setUploading(false);
-        
-        // Simulate analysis process
-        setAnalyzing(true);
-        setTimeout(() => {
-          setAnalyzing(false);
-        }, 2000);
       }, 1500);
     } else {
       alert("Please upload a PDF or document file");
     }
   };
 
+  // Handle analyze button click
+  const handleAnalyzeClick = async () => {
+    setAnalyzing(true);
+    
+    try {
+      // Create form data for API call
+      const formData = new FormData();
+      formData.append('resume', uploadedResume);
+      formData.append('job_description', jobDescription);
+      
+      // Make API call to Flask backend
+      const response = await axios.post('http://127.0.0.1:5000/score', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      console.log("API response:", response.data);
+      
+      // After successful API call, show analytics
+      setAnalyzing(false);
+      setShowAnalytics(true);
+    } catch (error) {
+      console.error("Error analyzing resume:", error);
+      setAnalyzing(false);
+      alert("There was an error analyzing your resume. Please try again.");
+    }
+  };
+
   // Reset upload
   const resetUpload = () => {
     setUploadedResume(null);
+    setShowAnalytics(false);
+    setJobDescription("");
   };
 
-  // If no resume uploaded yet, show upload screen
-  if (!uploadedResume || analyzing) {
-    return <ResumeUploadPage
-      handleFileUpload={handleFileUpload} 
-      uploading={uploading} 
-      analyzing={analyzing}
-    />;
+  // If showing analytics page
+  if (showAnalytics) {
+    return <ResumeAnalytics resumeFile={uploadedResume} resetUpload={resetUpload} />;
   }
 
-  // If resume is uploaded and analyzed, show analytics
-  return <ResumeAnalytics resumeFile={uploadedResume} resetUpload={resetUpload} />;
+  // Otherwise show upload page
+  return (
+    <ResumeUploadPage
+      handleFileUpload={handleFileUpload}
+      uploading={uploading}
+      analyzing={analyzing}
+      onAnalyzeClick={handleAnalyzeClick}
+      jobDescription={jobDescription}
+      setJobDescription={setJobDescription}
+    />
+  );
 }
-
-
