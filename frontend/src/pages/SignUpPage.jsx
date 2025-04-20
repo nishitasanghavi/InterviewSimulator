@@ -132,6 +132,11 @@ export default function SignupPage() {
             whileTap={{ scale: 0.95 }}
             onClick={handleGoogleSignup}
           >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png"
+              alt="Google logo"
+              className="w-5 h-5"
+            />
             <span>Sign up with Google</span>
           </motion.button>
 

@@ -7,7 +7,7 @@ const Tabs = () => {
 
   const tabs = [
     { label: "Dashboard", path: "/dashboard" },
-    { label: "Interviews", path: "/mock-interview" },
+    { label: "Interviews", path: "/interviews" },
     { label: "Practice", path: "/code-challenges" },
     { label: "Resume", path: "/resume" },
     { label: "Community", path: "/community" },
