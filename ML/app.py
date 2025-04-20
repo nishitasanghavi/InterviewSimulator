@@ -1,16 +1,17 @@
 # app.py
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import os
 from flask_cors import CORS
+
 from Ats_scorer.scorer import get_gemini_score_and_feedback, get_generalized_score_and_feedback, extract_text_from_pdf
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/', methods=['GET'])
-def index():
-    """Render the upload form."""
-    return render_template('index.html')
+# @app.route('/', methods=['GET'])
+# def index():
+#     """Render the upload form."""
+#     return render_template('index.html')
 
 @app.route('/score', methods=['POST'])
 def score_resume():
