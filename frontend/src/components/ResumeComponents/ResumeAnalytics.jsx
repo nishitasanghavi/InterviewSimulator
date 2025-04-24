@@ -25,7 +25,7 @@ import {
   X,
 } from "lucide-react";
 
-export default function ResumeAnalytics({ resumeFile, resetUpload }) {
+export default function ResumeAnalytics({ resumeFile, resetUpload, response}) {
   return (
     <div className="flex flex-col h-screen bg-gray-50 font-sans">
       {/* Header - Fixed at top */}
@@ -91,7 +91,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
                         <span className="text-5xl font-bold text-[#8A2BE2]">
-                          94
+                          {response.score}
                         </span>
                         <span className="text-gray-400 text-lg">/100</span>
                       </div>
@@ -105,7 +105,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                       Excellent progress!
                     </p>
                     <p className="text-gray-600 text-sm mb-3">
-                      Your resume outperforms 92% of other candidates in your
+                      Your resume outperforms {response.percentile}% of other candidates in your
                       field.
                     </p>
                     <button className="text-[#8A2BE2] text-sm font-medium flex items-center hover:underline">
@@ -158,12 +158,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                   </span>
                 </div>
                 <ul className="space-y-3 mt-4">
-                  {[
-                    "Quantifiable achievements",
-                    "Skills match job description",
-                    "Professional formatting",
-                    "Contact details complete",
-                  ].map((item, i) => (
+                  {response.strengths.map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm">
                       <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs">
                         ✓
@@ -180,7 +175,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                   <div className="flex items-center gap-2">
                     <AlertCircle className="w-5 h-5 text-amber-500" />
                     <h2 className="text-lg font-bold text-gray-800">
-                      Improvements
+                      Weakness
                     </h2>
                   </div>
                   <button className="text-[#8A2BE2] text-xs font-medium hover:underline bg-purple-50 px-2 py-1 rounded-lg">
@@ -188,10 +183,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                   </button>
                 </div>
                 <ul className="space-y-3 mt-4">
-                  {[
-                    "Add more industry keywords",
-                    "Reduce passive language",
-                  ].map((item, i) => (
+                  {response.weaknesses.map((item, i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm">
                       <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-xs">
                         !
@@ -208,96 +200,27 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
               </div>
             </div>
 
-            {/* Insights Section */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                  <PieChart className="w-5 h-5 text-[#8A2BE2]" />
-                  Resume Insights
-                </h2>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:border-[#8A2BE2] hover:text-[#8A2BE2] transition">
-                    Weekly
-                  </button>
-                  <button className="px-3 py-1 bg-[#8A2BE2] text-white rounded-lg text-sm">
-                    Monthly
-                  </button>
-                </div>
-              </div>
-            </div>
-
             {/* Repetitive verbs */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6 hover:shadow-md transition">
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-[#8A2BE2]" />
-                  <h2 className="text-lg font-bold text-gray-800">
-                    Word Usage Analysis
-                  </h2>
-                </div>
-                <span className="text-xs px-2.5 py-1 bg-purple-100 text-[#8A2BE2] rounded-full font-medium">
-                  Premium
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm mb-4">
-                Consider introducing more variety to your action verbs for
-                stronger impact.
-              </p>
-              <div className="space-y-4">
-                {[
-                  {
-                    verb: "Developed",
-                    width: "w-1/2",
-                    count: 4,
-                    alternatives: ["Created", "Built", "Established"],
-                  },
-                  {
-                    verb: "Brought",
-                    width: "w-1/3",
-                    count: 2,
-                    alternatives: ["Delivered", "Introduced", "Implemented"],
-                  },
-                  {
-                    verb: "Focused",
-                    width: "w-1/3",
-                    count: 2,
-                    alternatives: [
-                      "Concentrated",
-                      "Specialized",
-                      "Prioritized",
-                    ],
-                  },
-                  {
-                    verb: "Applied",
-                    width: "w-1/3",
-                    count: 2,
-                    alternatives: ["Utilized", "Employed", "Leveraged"],
-                  },
-                ].map((item, index) => (
-                  <div key={index}>
-                    <div className="flex items-center mb-1">
-                      <span className="font-medium w-20 text-sm text-gray-700">
-                        {item.verb}
-                      </span>
-                      <div className="flex-1 h-2.5 bg-gray-200 rounded-full mx-2">
-                        <div
-                          className={`${item.width} h-2.5 bg-gradient-to-r from-[#8A2BE2] to-[#6A5ACD] rounded-full`}
-                        ></div>
+            <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                  <PieChart className="w-5 h-5 text-[#8A2BE2]" />
+                  Improvements
+                </h2>
+            <ul className="space-y-3 mt-4">
+                  {response.improvements.map((item, i) => (
+                    <li key={i} className="flex items-center gap-2.5 text-sm">
+                      <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 text-xs">
+                        !
                       </div>
-                      <span className="text-gray-600 w-24 text-right text-xs font-medium">
-                        {item.count} times
-                      </span>
-                    </div>
-                    <div className="pl-20 text-xs text-gray-500">
-                      Try instead: {item.alternatives.join(", ")}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button className="flex items-center text-[#8A2BE2] mt-4 text-sm font-medium hover:underline">
-                View all verbs
-                <ArrowRight className="w-3.5 h-3.5 ml-1" />
-              </button>
+                      <span className="text-gray-700 font-medium">{item}</span>
+                    </li>
+                  ))}
+                  <li className="pt-2">
+                    <button className="w-full py-2 border border-dashed border-gray-300 rounded-lg text-center text-gray-500 text-sm hover:border-[#8A2BE2] hover:text-[#8A2BE2] transition">
+                      + Add custom improvement
+                    </button>
+                  </li>
+                </ul>
             </div>
 
             {/* Keywords Match */}
@@ -316,9 +239,9 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-gray-600 text-sm">
-                    Your resume matches 85% of the job description keywords.
+                    Your resume matches {response.keyword_matching_score}% of the job description keywords.
                   </p>
-                  <span className="text-lg font-bold text-[#8A2BE2]">85%</span>
+                  <span className="text-lg font-bold text-[#8A2BE2]">{response.keyword_matching_score}%</span>
                 </div>
                 <div className="w-full h-2.5 bg-gray-200 rounded-full">
                   <div className="w-[85%] h-2.5 bg-gradient-to-r from-[#8A2BE2] to-[#6A5ACD] rounded-full"></div>
@@ -329,14 +252,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                   Matching keywords:
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {[
-                    "Project Management",
-                    "Agile",
-                    "Customer Experience",
-                    "UI/UX",
-                    "Product Strategy",
-                    "Design Systems",
-                  ].map((keyword, i) => (
+                  {response.keywords_matching.map((keyword, i) => (
                     <span
                       key={i}
                       className="px-2.5 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-100"
@@ -351,7 +267,7 @@ export default function ResumeAnalytics({ resumeFile, resetUpload }) {
                   Missing keywords:
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {["SaaS Experience", "Remote Team Management"].map(
+                  {response.missing_keywords.map(
                     (keyword, i) => (
                       <span
                         key={i}

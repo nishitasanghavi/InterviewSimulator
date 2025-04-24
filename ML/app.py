@@ -40,13 +40,24 @@ def score_resume():
 
     # Determine the scoring method based on whether a job description was provided
     if job_description:
-        score, feedback = get_gemini_score_and_feedback(job_description, resume_text)
+        score, feedback_dict = get_gemini_score_and_feedback(job_description, resume_text)
     else:
-        score, feedback = get_generalized_score_and_feedback(resume_text)
-    print(f"Score: {score}, Feedback: {feedback}")
+        score, feedback_dict = get_generalized_score_and_feedback(resume_text)
+    
+    # Calculate percentile (example - you might want to adjust this logic)
+    percentile = min(max(round(score * 0.92), 0), 100)  # Simple calculation for demo
+    
+    print(f"Score: {score}, Feedback: {feedback_dict}")
+    
     return jsonify({
         'score': score,
-        'feedback': feedback
+        'percentile': percentile,
+        'strengths': feedback_dict.get('strengths', []),
+        'weaknesses': feedback_dict.get('weaknesses', []),
+        'improvements': feedback_dict.get('improvements', []),
+        'keyword_matching_score': feedback_dict.get('keyword_matching_score', 0),
+        'keywords_matching': feedback_dict.get('keywords_matching', []),
+        'missing_keywords': feedback_dict.get('missing_keywords', [])
     })
 
 if __name__ == '__main__':

@@ -33,6 +33,7 @@ export default function ResumeAnalyticsFlow() {
   const [analyzing, setAnalyzing] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [jobDescription, setJobDescription] = useState("");
+  const [response, setresponse] = useState("");
 
   // Handle file upload
   const handleFileUpload = (e) => {
@@ -61,13 +62,13 @@ export default function ResumeAnalyticsFlow() {
       formData.append('job_description', jobDescription);
       
       // Make API call to Flask backend
-      const response = await axios.post('http://127.0.0.1:5000/score', formData, {
+      const temp = await axios.post('http://127.0.0.1:5000/score', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      
-      console.log("API response:", response.data);
+      setresponse(temp.data);
+      console.log("API response:", temp.data);
       
       // After successful API call, show analytics
       setAnalyzing(false);
@@ -88,7 +89,7 @@ export default function ResumeAnalyticsFlow() {
 
   // If showing analytics page
   if (showAnalytics) {
-    return <ResumeAnalytics resumeFile={uploadedResume} resetUpload={resetUpload} />;
+    return <ResumeAnalytics resumeFile={uploadedResume} resetUpload={resetUpload} response = {response} />;
   }
 
   // Otherwise show upload page
