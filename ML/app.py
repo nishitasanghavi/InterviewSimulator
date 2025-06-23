@@ -79,18 +79,24 @@ def start_interview():
     if not model:
         return jsonify({'error': 'Gemini API not configured. Please set GEMINI_API_KEY.'}), 500
     
-    data = request.get_json()
-    
-    resume = data.get('resume', '')
-    job_description = data.get('job_description', '')
-    
-    if not resume or not job_description:
-        return jsonify({'error': 'Both resume and job description are required.'}), 400
-    
+    # Check for uploaded files
+    if 'resume' not in request.files or 'job_description' not in request.files:
+        return jsonify({'error': 'Both resume and job description files are required.'}), 400
+
+    resume_file = request.files['resume']
+    jd_file = request.files['job_description']
+
+    # Read text content from the files
+    resume = resume_file.read().decode('utf-8', errors='ignore')
+    job_description = jd_file.read().decode('utf-8', errors='ignore')
+
+    if not resume.strip() or not job_description.strip():
+        return jsonify({'error': 'Both resume and job description must have content.'}), 400
+
     # Generate session ID
     session_id = f"session_{int(time.time())}"
-    
-    # Initialize interview session
+
+    # Store the session
     interview_sessions[session_id] = {
         'resume': resume,
         'job_description': job_description,
