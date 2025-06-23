@@ -7,6 +7,7 @@ import CandidateDashboard from './pages/PofilePage';
 import Dashboard from './pages/Dashboard';
 import ResumeAnalytics from './pages/Resume';
 import Interviews from './pages/Interviews';
+import MockInterviewPage from './pages/MockInterviewPage'; 
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/resume" element={<ResumeAnalytics />} />
         <Route path="/interviews" element={<Interviews />} />
         <Route path="/interviews/:id" element={<Interviews />} />
+        <Route path="/chat" element={<MockInterviewPage />} />
       </Routes>
     </Router>
   );
