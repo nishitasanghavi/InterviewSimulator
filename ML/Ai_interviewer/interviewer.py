@@ -17,7 +17,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY not found in environment variables")
 
-genai.configure(api_key=GEMINI_API_KEY)
+genai.configure(api_key='AIzaSyBQOnKIDrgIFe2w9E1OgRVh5ywt0y_jygQ')
 
 # Initialize the model
 model = genai.GenerativeModel('gemini-1.5-pro')
@@ -52,7 +52,7 @@ You are an advanced AI Interviewer conducting a professional job interview. Your
 3. Make thoughtful follow-up questions based on previous answers
 4. Assess both technical skills and soft skills
 5. Maintain a professional but conversational tone
-6. End the interview naturally when sufficient assessment is complete
+6. End the interview naturally when sufficient assessment is complete 
 
 # CURRENT INTERACTION
 The candidate just said: {user_input}

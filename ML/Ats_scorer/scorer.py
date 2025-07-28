@@ -8,7 +8,7 @@ load_dotenv()
 
 # Configure the Gemini API key
 api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key='AIzaSyA4lm9Yp97AX7qXV0k8zekFMpaiQbSkSlY')
+genai.configure(api_key='AIzaSyBQOnKIDrgIFe2w9E1OgRVh5ywt0y_jygQ')
 
 model = genai.GenerativeModel('gemini-1.5-pro')
 
